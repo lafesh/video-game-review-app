@@ -3,6 +3,10 @@ class ReviewsController < ApplicationController
         @reviews = Review.all
     end
 
+    def game
+        
+    end
+
     def new
         @review = Review.new
     end

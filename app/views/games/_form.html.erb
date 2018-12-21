@@ -1,0 +1,15 @@
+<%= form_for game do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %> <br>
+
+    <%= f.label :description %>
+    <%= f.text_area :description %> <br>
+
+    <%= f.label :platform %>
+    <%= f.select :platform, ("PC" "PS4" "XBOX" "Other") %> <br>
+
+    <%= f.label :rating %>
+    <%= f.select :rating, ("Everyone" "Everyone 10+" "Teen (13+)" "Mature (17+)" "Adults (18+)") %> <br>
+
+    <%= f.submit button %>
+<% end %>

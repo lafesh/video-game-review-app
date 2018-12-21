@@ -12,7 +12,7 @@ class ReviewsController < ApplicationController
     end
 
     def create
-        @review = Review.create(review_params)
+        @review = Review.create(review_params) #id is nil why????
         binding.pry
         redirect_to game_review_path(@review.game, @review)
     end

@@ -5,11 +5,13 @@ Rails.application.routes.draw do
 
   get '/reviews/game', to: 'reviews#game'
 
+  resources :reviews, only: [:index, :create ]
+
   resources :games do
-    resources :reviews, only: [:new, :create, :show]
+    resources :reviews, only: [:new, :show]
   end
 
-  resources :reviews, only: :index
+  
 
   
 

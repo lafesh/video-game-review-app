@@ -9,7 +9,20 @@ class ReviewsController < ApplicationController
 
     def new
         @review = Review.new(game_id: params[:game_id])
-        #@review.reviews.new #i think this is empty
-        #binding.pry
     end
+
+    def create
+        @review = Review.create(review_params)
+        binding.pry
+        redirect_to game_review_path(@review.game, @review)
+    end
+
+    def show
+        @review = Review.find(params[:id])
+    end
+
+    private
+        def review_params
+            params.require(:review).permit(:title, :content, :rating, :recommend, :user_id, :game_id)
+        end
 end

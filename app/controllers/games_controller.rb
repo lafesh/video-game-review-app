@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
     layout "reviews"
-    
+
     def new
         @game = Game.new
     end

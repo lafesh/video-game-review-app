@@ -1,4 +1,5 @@
 class ReviewsController < ApplicationController
+    require 'pry'
     def index
         @reviews = Review.all
     end
@@ -7,6 +8,8 @@ class ReviewsController < ApplicationController
     end
 
     def new
-        @review = Game.find(params[:game_id]).reviews.new #i think this is empty. pry!!
+        @review = Review.new(game_id: params[:game_id])
+        #@review.reviews.new #i think this is empty
+        #binding.pry
     end
 end

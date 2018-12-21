@@ -4,10 +4,7 @@ class ReviewsController < ApplicationController
         @reviews = Review.all
     end
 
-   
-
     def new
-        #binding.pry
         @review = Review.new(game_id: params[:game_id], user_id: current_user.id)
     end
 

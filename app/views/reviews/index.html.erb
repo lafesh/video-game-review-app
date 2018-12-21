@@ -1,3 +1,15 @@
-<h3>Hi! Here are all the reviews you have written so far</h3>
+<h3>Hi <%= current_user.first_name %>! Here are all the reviews you have written so far</h3>
+
+<ul>
+    
+    <% @reviews.each do |r| %>
+    <li>
+        <%= link_to r.title, game_review_path(r.game, r) %> <br>
+        for <%= r.game.name %> <br>
+        created at <%= r.created_at.strftime('%A, %b %d, %Y') %>
+    </li>    
+    <% end %>
+    
+</ul>
 
 <p><%= button_to 'Create new Review', games_select_game_path, method: :get %></p>

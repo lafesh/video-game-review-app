@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   root to: 'application#welcome'
 
-  get '/reviews/game', to: 'reviews#game'
+  get '/games/select_game', to: 'games#select_game'
+  post '/games/select', to: 'games#select'
 
   resources :reviews, only: [:index, :create ]
 

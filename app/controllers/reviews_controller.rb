@@ -4,17 +4,16 @@ class ReviewsController < ApplicationController
         @reviews = Review.all
     end
 
-    def game 
-        @games = Game.all   
-    end
+   
 
     def new
-        @review = Review.new(game_id: params[:game_id])
+        #binding.pry
+        @review = Review.new(game_id: params[:game_id], user_id: current_user.id)
     end
 
     def create
-        @review = Review.create(review_params) #id is nil why????
-        binding.pry
+        @review = Review.create(review_params)
+        
         redirect_to game_review_path(@review.game, @review)
     end
 

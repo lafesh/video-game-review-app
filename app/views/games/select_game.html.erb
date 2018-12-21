@@ -1,9 +1,9 @@
 <h3>Which Game would you like to review?</h3>
 
 <!--select game from select field -->
-<%= form_tag('/reviews/new', method: :get) do %>
+<%= form_tag('/games/select') do %>
     <%= select_tag "games", options_from_collection_for_select(@games, "id", "name") %>
-    <%= submit_tag  "Choose Game" %>
+    <%= submit_tag "Choose Game" %>
 <% end %>
 
 <p><%= button_to 'Create New Game', new_game_path, method: :get %></p>

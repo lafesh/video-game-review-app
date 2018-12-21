@@ -2,22 +2,22 @@ class Review < ApplicationRecord
     belongs_to :user
     belongs_to :game
 
+    scope :recommended, -> { where(recommend: true) } #recommended reviews, dont need to write a class
+
     def age_restriction
-        message = (flash[:messge] = "You are not old enough to review this game" unless user.birthday.year > self.rating)
+        rating = nil
         if review.rating == "Adults (18+)"
-            review.rating = Time.now.year - 18 #only the year is left, how to keep the whole date
-            message
+            rating = Time.now.year - 18 #only the year is left, how to keep the whole date
+           
         elsif review.rating == "Mature (17+)"
-            review.rating = Time.now.year - 17
-            message
+            rating = Time.now.year - 17
+         
         elsif review.rating == "Teen (13+)"
-            review.rating = Time.now.year - 13
-            message  
+            rating = Time.now.year - 13
+          
         elsif review.rating == "Everyone (10+)"
-            review.rating = Time.now.year - 10
-            message
-        elsif review.rating == "Everyone"
-            flash[:message] = "You are old enough to review this game!"
+           rating = Time.now.year - 10
         end
+        flash[:messge] = "You are not old enough to review this game" if user.birthday.year > rating
     end
 end

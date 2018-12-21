@@ -3,11 +3,10 @@ class ReviewsController < ApplicationController
         @reviews = Review.all
     end
 
-    def game
-        
+    def game   
     end
 
     def new
-        @review = Review.new
+        @review = Game.find(params[:game_id]).reviews.new #i think this is empty. pry!!
     end
 end

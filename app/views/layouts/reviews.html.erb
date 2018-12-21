@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VideoGameReviewApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header><h1>Video Game Reviews</h1></header>
+
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <nav>
+        <a href="/reviews">My Reviews</a>
+        <a href="/reviews/game">Create New List</a>
+        <a href="#">Find Reviews</a>
+        <a href="/users/sign_out">Logout</a>
+    </nav> <br>
+    
+    <%= yield %>
+    
+  </body>
+</html>

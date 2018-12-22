@@ -1,8 +1,8 @@
 class ReviewsController < ApplicationController
     require 'pry'
     def index
-        binding.pry
-        @reviews = Review.all
+        
+        @user = current_user
     end
 
     def new

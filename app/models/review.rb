@@ -2,6 +2,9 @@ class Review < ApplicationRecord
     belongs_to :user
     belongs_to :game
 
+    validates :title, presence: true
+    validates :content, presence: true
+
     scope :recommended, -> { where(recommend: true) } #recommended reviews, dont need to write a class
 
     def age_restriction

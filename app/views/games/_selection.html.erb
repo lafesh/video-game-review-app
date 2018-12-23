@@ -1,4 +1,3 @@
-<!--select game from select field -->
 <%= form_tag(link) do %>
     <%= select_tag "games", options_from_collection_for_select(games, "id", "name") %>
     <%= submit_tag button %>

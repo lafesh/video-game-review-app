@@ -3,3 +3,4 @@
 <h2><%= @review.title %></h2>
 <p><%= @review.content %></p>
 
+<%= button_to 'Edit Review', edit_game_review_path(@review.game, @review), method: :get %>

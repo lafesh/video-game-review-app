@@ -14,8 +14,12 @@ class GamesController < ApplicationController
     end
 
     def create
-        game = Game.create(game_params)
-        redirect_to new_game_review_path(game.id)
+        game = Game.new(game_params)
+        if game.save
+            redirect_to new_game_review_path(game.id)
+        else 
+            redirect_to new_game_path 
+        end
     end
 
     private

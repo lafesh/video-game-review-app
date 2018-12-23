@@ -10,9 +10,13 @@ class ReviewsController < ApplicationController
     end
 
     def create
-        @review = Review.create(review_params)
-        
-        redirect_to game_review_path(@review.game, @review)
+        @review = Review.new(review_params)
+        if @review.save
+            redirect_to game_review_path(@review.game, @review)
+        else
+            flash[:message] = "Please fill out all the fields."
+            redirect_to new_game_review_path(@review.game)
+        end
     end
 
     def show

@@ -25,6 +25,7 @@ class GamesController < ApplicationController
     
     def game_overview
         @games = Game.all
+        render layout: "root"
     end
 
     def overview 

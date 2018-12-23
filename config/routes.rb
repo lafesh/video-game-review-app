@@ -3,12 +3,11 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
-  root to: 'application#welcome'
+  root to: 'games#game_overview'
 
   get '/games/select_game', to: 'games#select_game'
   post '/games/select', to: 'games#select'
 
-  get '/games/game_overview', to: 'games#game_overview'
   post '/games/overview', to: 'games#overview'
 
   resources :reviews, only: [:index, :create, :update]

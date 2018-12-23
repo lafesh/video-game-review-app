@@ -7,8 +7,6 @@
     <%= button_to 'Delete Game', game_path(@game), method: :delete, data: { confirm: 'Are you sure you want to delete this game and all its reviews?' } %>
 <% end %>
 
-<!--add all reviews here-->
-
 <% @game.reviews.each do |review| %>
     <h3><%= review.title %></h3>
     <h4><%= review.rating %> Star(s) - <%= review.recommend ? "Would Recommend" : "Would Not Recommend" %></h4>

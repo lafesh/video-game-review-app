@@ -4,3 +4,4 @@
 <p><%= @review.content %></p>
 
 <%= button_to 'Edit Review', edit_game_review_path(@review.game, @review), method: :get %>
+<%= button_to 'Delete Review', game_review_path(@review.game, @review), method: :delete %>

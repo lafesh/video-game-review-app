@@ -16,7 +16,7 @@ class ReviewsController < ApplicationController
         else
             flash[:alert] = "Please fill out all the fields."
             redirect_to new_game_review_path(review.game)
-        end
+        end 
     end
 
     def show
@@ -41,6 +41,17 @@ class ReviewsController < ApplicationController
             flash[:alert] = "You can only update your own reviews"
             redirect_to reviews_path
         end
+    end
+
+    def destroy
+        review = Review.find(params[:id])
+        if review.user == current_user
+            review.delete
+            flash[:alert] = "Review has been deleted successfully!"
+        else
+            flash[:alert] = "You cannot delete someone else's review!"
+        end
+        redirect_to reviews_path
     end
 
     private

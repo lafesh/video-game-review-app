@@ -7,7 +7,7 @@ class GamesController < ApplicationController
 
     def select_game 
         @games = Game.all   
-    end
+    end 
 
     def select 
         redirect_to new_game_review_path(params[:games])

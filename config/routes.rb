@@ -8,10 +8,13 @@ Rails.application.routes.draw do
   get '/games/select_game', to: 'games#select_game'
   post '/games/select', to: 'games#select'
 
-  resources :reviews, only: :index
+  get '/games/game_overview', to: 'games#game_overview'
+  post '/games/overview', to: 'games#overview'
+
+  resources :reviews, only: [:index, :create, :update]
 
   resources :games do
-    resources :reviews, except: [:index]
+    resources :reviews, except: [:index, :create, :update]
   end
 
   

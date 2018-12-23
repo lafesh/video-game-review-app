@@ -1,0 +1,7 @@
+<h3>Which Game would you like to see?</h3>
+
+<%= render partial: 'selection', locals: { link: '/games/overview', games: @games, button: "Select Game"} %>
+
+<h3>Cannot find what you are looking for? Sign Up or Log In and create your own game and review!</h3>
+<p><%= button_to 'Sign Up', new_user_registration_path, method: :get %></p>
+<p><%= button_to 'Log In', new_user_session_path, method: :get %></p>

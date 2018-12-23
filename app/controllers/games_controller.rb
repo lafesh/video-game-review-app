@@ -12,6 +12,18 @@ class GamesController < ApplicationController
     def select 
         redirect_to new_game_review_path(params[:games])
     end
+    
+    def game_overview
+        @games = Game.all
+    end
+
+    def overview 
+        redirect_to game_path(params[:games])
+    end
+
+    def show
+        @game = Game.find(params[:id])
+    end
 
     def create
         game = Game.new(game_params)

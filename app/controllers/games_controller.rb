@@ -18,6 +18,7 @@ class GamesController < ApplicationController
         if game.save
             redirect_to new_game_review_path(game.id)
         else 
+            flash[:alert] = "Please fill out all the fields"
             redirect_to new_game_path 
         end
     end

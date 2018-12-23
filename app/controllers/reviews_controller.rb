@@ -14,7 +14,7 @@ class ReviewsController < ApplicationController
         if @review.save
             redirect_to game_review_path(@review.game, @review)
         else
-            flash[:message] = "Please fill out all the fields."
+            flash[:alert] = "Please fill out all the fields."
             redirect_to new_game_review_path(@review.game)
         end
     end

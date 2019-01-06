@@ -24,7 +24,6 @@ class GamesController < ApplicationController
     end
     
     def game_overview
-        binding.pry
         @games = Game.all
         render layout: "root" unless user_signed_in?
     end

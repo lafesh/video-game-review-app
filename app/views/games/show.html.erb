@@ -7,8 +7,20 @@
     <%= button_to 'Delete Game', game_path(@game), method: :delete, data: { confirm: 'Are you sure you want to delete this game and all its reviews?' } %>
 <% end %>
 
+<% if user_signed_in? %>
+    <%= button_to 'Write Review', new_game_review_path(@game), method: :get %>
+<% end %>
+
+<br><h3>Reviews</h3>
+
 <% @game.reviews.each do |review| %>
-    <h3><%= review.title %></h3>
-    <h4><%= review.rating %> Star(s) - <%= review.recommend ? "Would Recommend" : "Would Not Recommend" %></h4>
-    <p><%= review.content %></p>
+    <div class="review">
+        <h4><%= review.title %></h4>
+        <h4><%= review.rating %> Star(s) - <%= review.recommend ? "Would Recommend" : "Would Not Recommend" %></h4>
+        <p><%= review.content %></p>
+    </div>
+<% end %>
+
+<% if !user_signed_in? %>
+    <h3>Cannot find what you are looking for? <%= link_to 'Sign Up', new_user_registration_path %> or <%= link_to 'Log In', new_user_session_path %> and create your own Games and Reviews!</h3> 
 <% end %>

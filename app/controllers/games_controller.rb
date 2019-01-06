@@ -24,8 +24,9 @@ class GamesController < ApplicationController
     end
     
     def game_overview
+        binding.pry
         @games = Game.all
-        render layout: "root"
+        render layout: "root" unless user_signed_in?
     end
 
     def overview 
@@ -34,7 +35,8 @@ class GamesController < ApplicationController
 
     def show
         @game = Game.find(params[:id])
-    end
+        render layout: "root" unless user_signed_in?
+    end        
 
     def edit
         @game = Game.find(params[:id])

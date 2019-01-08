@@ -5,7 +5,17 @@ class ReviewsController < ApplicationController
     end
 
     def new
-        @review = Review.new(game_id: params[:game_id], user_id: current_user.id)
+        if user_signed_in?
+            @review = Review.new(game_id: params[:game_id], user_id: current_user.id)
+            if current_user.birthday != nil
+                if flash[:alert] = @review.age_restriction
+                    redirect_to root_path
+                end
+            end
+        else
+            flash[:alert] = "You must be logged in to write a Review!"
+            redirect_to games_game_overview_path
+        end
     end
 
     def create
@@ -23,7 +33,16 @@ class ReviewsController < ApplicationController
     end
 
     def edit
-        @review = Review.find(params[:id])
+        if user_signed_in?
+            @review = Review.find(params[:id])
+            unless current_user == @review.user
+                flash[:alert] = "Only the creator of this Review can edit it!"
+            redirect_to game_review_path(@review.game, @review)
+            end
+        else 
+            flash[:alert] = "You must be logged in to edit a Review!"
+            redirect_to root_path
+        end   
     end
 
     def update
@@ -43,14 +62,19 @@ class ReviewsController < ApplicationController
     end
 
     def destroy
-        review = Review.find(params[:id])
-        if review.user == current_user
-            review.delete
-            flash[:alert] = "Review has been deleted successfully!"
+        if user_signed_in?
+            review = Review.find(params[:id])
+            if review.user == current_user
+                review.delete
+                flash[:alert] = "Review has been deleted successfully!"
+            else
+                flash[:alert] = "You cannot delete someone else's review!"
+            end
+            redirect_to reviews_path
         else
-            flash[:alert] = "You cannot delete someone else's review!"
+            flash[:alert] = "You must be logged in to delete this Review!"
+            redirect_to game_path(review.game)
         end
-        redirect_to reviews_path
     end
 
     private

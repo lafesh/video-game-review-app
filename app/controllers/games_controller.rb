@@ -2,7 +2,17 @@ class GamesController < ApplicationController
     layout "reviews"
 
     def new
-        @game = Game.new
+        if user_signed_in?
+            if current_user.birthday != nil
+                if flash[:alert] = current_user.adult
+                    redirect_to games_select_game_path
+                end
+            end
+            @game = Game.new
+        else
+            flash[:alert] = "You must be logged in to create a Game!"
+            redirect_to root_path
+        end
     end
 
     def create
@@ -38,7 +48,16 @@ class GamesController < ApplicationController
     end        
 
     def edit
-        @game = Game.find(params[:id])
+        if user_signed_in? 
+            @game = Game.find(params[:id])
+            unless current_user == @game.reviews.first.user
+                flash[:alert] = "Only the creator of this Game can edit it!"
+                redirect_to game_path(@game)
+            end
+        else 
+            flash[:alert] = "You must be logged in to edit a Game!"
+            redirect_to root_path
+        end   
     end
 
     def update
@@ -53,10 +72,19 @@ class GamesController < ApplicationController
     end
 
     def destroy
-        game = Game.find(params[:id])
-        flash[:alert] = "Your game #{game.name} has successfully been deleted!"
-        game.delete
-        redirect_to games_game_overview_path
+        if user_signed_in?
+            game = Game.find(params[:id])
+            if current_user == game.reviews.first.user
+                flash[:alert] = "Your game #{game.name} has successfully been deleted!"
+                game.delete
+                redirect_to games_game_overview_path
+            else 
+                flash[:alert] = "Only the Game creator can delete it!"
+                redirect_to game_path(game)
+            end
+        else 
+            flash[:alert] = "You must be logged in to delete the Game!"
+        end
     end
 
     private

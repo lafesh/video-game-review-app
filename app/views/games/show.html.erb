@@ -7,9 +7,8 @@
     <%= button_to 'Delete Game', game_path(@game), method: :delete, data: { confirm: 'Are you sure you want to delete this game and all its reviews?' } %>
 <% end %>
 
-<% if user_signed_in? %>
-    <%= button_to 'Write Review', new_game_review_path(@game), method: :get %>
-<% end %>
+<%= button_to 'Write Review', new_game_review_path(@game), method: :get unless current_user == @game.reviews.first.user%>
+
 
 <br><h3>Reviews</h3>
 

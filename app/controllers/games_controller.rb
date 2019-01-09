@@ -10,8 +10,7 @@ class GamesController < ApplicationController
             end
             @game = Game.new
         else
-            flash[:alert] = "You must be logged in to create a Game!"
-            redirect_to root_path
+            logged_in
         end
     end
 
@@ -20,7 +19,7 @@ class GamesController < ApplicationController
         if game.save
             redirect_to new_game_review_path(game.id)
         else 
-            flash[:alert] = "Please fill out all the fields"
+            flash[:message] = game.e
             redirect_to new_game_path 
         end
     end
@@ -55,8 +54,7 @@ class GamesController < ApplicationController
                 redirect_to game_path(@game)
             end
         else 
-            flash[:alert] = "You must be logged in to edit a Game!"
-            redirect_to root_path
+            logged_in
         end   
     end
 
@@ -66,7 +64,7 @@ class GamesController < ApplicationController
         if game.save
             redirect_to game_path(game)
         else
-            flash[:alert] = "Please fill out all the fields!"
+            flash[:message] = game.e
             redirect_to edit_game_path(game)
         end
     end
@@ -83,7 +81,7 @@ class GamesController < ApplicationController
                 redirect_to game_path(game)
             end
         else 
-            flash[:alert] = "You must be logged in to delete the Game!"
+            logged_in
         end
     end
 

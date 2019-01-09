@@ -1,3 +1,5 @@
+<h2>Which Game would you like to <%= insert %>?</h2>
+
 <%= form_tag(link) do %>
     <%= select_tag "games", options_from_collection_for_select(games, "id", "name") %>
     <%= submit_tag button %>

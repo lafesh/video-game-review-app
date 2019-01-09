@@ -1,23 +1,26 @@
 <h2><%= @game.name %></h2>
-<p>Available for <%= @game.platform %>, <%= @game.rating %></p>
+<p>Available for <%= @game.platform %> - <%= @game.rating %></p>
 <p><%= @game.description %></p>
 
 <% if @game.reviews.first.user == current_user %>
     <%= button_to 'Edit Game', edit_game_path(@game), method: :get %>
     <%= button_to 'Delete Game', game_path(@game), method: :delete, data: { confirm: 'Are you sure you want to delete this game and all its reviews?' } %>
+<% else %>
+    <%= button_to 'Write Review', new_game_review_path(@game), method: :get %>
 <% end %>
 
-<%= button_to 'Write Review', new_game_review_path(@game), method: :get unless current_user == @game.reviews.first.user%>
+<br>
+_________________________________________________________
 
-
-<br><h3>Reviews</h3>
+<br><h2>Reviews</h2>
 
 <% @game.reviews.each do |review| %>
     <div class="review">
-        <h4><%= review.title %></h4>
-        <h4><%= review.rating %> Star(s) - <%= review.recommend ? "Would Recommend" : "Would Not Recommend" %></h4>
+        <h3><%= review.title %></h3>
+        <h4><%= review.rating %> Star(s) - <%= rec(review) %></h4>
         <p><%= review.content %></p>
-    </div>
+        <h5>written by <%= review.user.first_name %></h5>
+    </div><br>   
 <% end %>
 
 <% if !user_signed_in? %>

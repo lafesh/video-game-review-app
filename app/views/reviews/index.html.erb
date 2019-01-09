@@ -3,11 +3,14 @@
 <ul>
     
     <% @user.reviews.each do |r| %>
-    <li>
-        <%= link_to r.title, game_review_path(r.game, r) %>
-        for <%= r.game.name %> <br>
-        created at <%= r.created_at.strftime('%A, %b %d, %Y') %>
-    </li>    
+      <% unless r.game == nil %>
+        <li>
+            <%= link_to r.title, game_review_path(r.game, r) %>
+            for <%= r.game.name %> <br>
+            created at <%= r.created_at.strftime('%A, %b %d, %Y') %>
+        </li> 
+        <% else %>
+      <% end %>
     <% end %>
     
 </ul>

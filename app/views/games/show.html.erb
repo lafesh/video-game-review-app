@@ -14,13 +14,33 @@ _________________________________________________________
 
 <br><h2>Reviews</h2>
 
-<% @game.reviews.each do |review| %>
-    <div class="review">
-        <h3><%= review.title %></h3>
-        <h4><%= review.rating %> Star(s) - <%= rec(review) %></h4>
-        <p><%= review.content %></p>
-        <h5>written by <%= review.user.first_name %></h5>
-    </div><br>   
+<%= form_tag(games_select_user_path) do %>
+    <%= hidden_field_tag 'game', @game.id %>
+    <%= select_tag 'user_id', options_from_collection_for_select(@users, "id", "first_name") %>
+    <%= submit_tag "Find User" %>
+<% end %>
+
+<% if @user %>
+    <% @user.reviews.find_all{|r| r.game_id == @game.id}.each do |review| %>
+        <div class="review">
+            <h3><%= review.title %></h3>
+            <h4><%= review.rating %> Star(s) - <%= rec(review) %></h4>
+            <p><%= review.content %></p>
+            <h5>written by <%= review.user.first_name %></h5>
+        </div><br>  
+    <% end %>
+
+    <%= button_to 'See All Reviews', game_path(@game), method: :get %>
+    
+<% else %>
+    <% @game.reviews.each do |review| %>
+        <div class="review">
+            <h3><%= review.title %></h3>
+            <h4><%= review.rating %> Star(s) - <%= rec(review) %></h4>
+            <p><%= review.content %></p>
+            <h5>written by <%= review.user.first_name %></h5>
+        </div><br>   
+    <% end %>
 <% end %>
 
 <% if !user_signed_in? %>

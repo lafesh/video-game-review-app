@@ -42,9 +42,17 @@ class GamesController < ApplicationController
     end
 
     def show
+        @users = User.all
         @game = Game.find(params[:id])
         render layout: "root" unless user_signed_in?
-    end        
+    end    
+    
+    def select_user
+        @users = User.all
+        @game = Game.find(params[:game])
+        @user = User.find(params[:user_id])
+        render :'games/show'
+    end
 
     def edit
         if user_signed_in? 

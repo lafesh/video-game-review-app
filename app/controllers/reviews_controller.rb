@@ -32,6 +32,7 @@ class ReviewsController < ApplicationController
 
     def create
         review = Review.new(review_params)
+        binding.pry
         if review.save
             respond_to do |format|
                 format.html {render :'games/show'}

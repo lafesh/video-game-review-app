@@ -6,7 +6,7 @@ function attachListeners() {
     $('.js-reviews').click(getReviews)
     $('.js-next').click(nextReview)
     $('.js-new-review').click(newReview)
-    $('.js-submit').click(submitReview)
+    $('#js-submit').click(submitReview)
 }
 
 function getReviews() {
@@ -50,16 +50,34 @@ function nextReview() {
     })
 }
 
+function createForm(action, method, model = null) {
+    //do i need this if i am only using it for one form
+}
+
 function newReview() {
     event.preventDefault()
     var gameId = parseInt($(".js-new-review").attr("data-id"))
     $.get(`/games/${gameId}/reviews/new.json`, function(data) {
-        var form = $("#form_id")
-        $("#review-form").append(form)
+        $(".js-new-review").remove()
+        $("#review-form").append(
+            `<form action="/reviews" method="post">
+                <input type="hidden" id="game_id" name="game_id" value="${data["game_id"]}">
+                <input type="hidden" id="user_id" name="user_id" value="${data["user_id"]}">
+                <label for="title">Title</label>
+                <input type="text" name="title">
+                <label for="content">Content</label>
+                <input type="text" name="content">
+                <label for="rating">Rating</label>
+                <input type="number" name="rating" min="1" max="5" step="1" value="1">
+                <label for="recommend">Recommend</label>
+                <input type="checkbox" name="recommend">
+                <input type="submit" value="Create Review" id=js-submit">
+            </form>`
+        )
         debugger
     })
 }
 
 function submitReview() {
-
+    debugger
 }

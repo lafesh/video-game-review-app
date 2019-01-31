@@ -2,7 +2,15 @@ class ReviewsController < ApplicationController
     require 'pry'
     def index
         @user = current_user
-        
+        if params[:game_id]
+            @users = User.all
+            @game = Game.find_by(id: params[:game_id])
+            @reviews = @game.reviews 
+            respond_to do |format|
+                format.html {render :'games/show'}
+                format.json {render json: [@reviews, @users]}
+            end
+        end
     end
 
     def new
@@ -13,6 +21,10 @@ class ReviewsController < ApplicationController
                     redirect_to root_path
                 end
             end
+            respond_to do |format|
+                format.html {render :new}
+                format.json {render json: @review}
+            end
         else
             logged_in
         end
@@ -21,7 +33,10 @@ class ReviewsController < ApplicationController
     def create
         review = Review.new(review_params)
         if review.save
-            redirect_to game_review_path(review.game, review)
+            respond_to do |format|
+                format.html {render :'games/show'}
+                format.json {render json: review}
+            end
         else
             flash[:message] = review.e
             redirect_to new_game_review_path(review.game)
@@ -29,7 +44,13 @@ class ReviewsController < ApplicationController
     end
 
     def show
+        @games = Game.all
+        @reviews = current_user.reviews
         @review = Review.find(params[:id])
+        respond_to do |format|
+            format.html {render :show}
+            format.json {render json: [@review, @reviews, @games]}
+        end
     end
 
     def edit

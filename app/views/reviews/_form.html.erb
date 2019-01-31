@@ -1,6 +1,6 @@
 <h2><%= insert %> Review for <%= review.game.name %></h2>
 
-<%= form_for review do |f| %>
+<%= form_for review, html: {id: :form_id } do |f| %>
     <%= f.hidden_field :game_id %>
     <%= f.hidden_field :user_id %>
 
@@ -16,5 +16,5 @@
     <%= f.label :recommend %>
     <%= f.check_box :recommend %> <br>
 
-    <%= f.submit button %>
+    <%= f.submit button, id: value %>
 <% end %>

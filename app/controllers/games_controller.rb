@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
     layout "reviews"
-
+    
     def new
         if user_signed_in?
             if current_user.birthday != nil

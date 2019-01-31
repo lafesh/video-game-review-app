@@ -1,8 +1,11 @@
-<h1><%= @review.game.name.capitalize %></h1>
-<h3><%= @review.rating %> Star(s) - <%= rec(@review) %></h3>
-<h2><%= @review.title %></h2>
-<p><%= @review.content %></p>
+<button class="js-next" review-id="<%= @review.id %>" game-id="<%= @review.game_id %>" type="button">Next Review</button>
 
+<h1 id="r-game"><%= @review.game.name.capitalize %></h1>
+<h3 id="r-rating"><%= @review.rating %> Star(s) - <%= rec(@review) %></h3>
+<h2 id="r-title"><%= @review.title %></h2>
+<p id="r-content"><%= @review.content %></p>
+
+<!--pretty sure those buttons need to be included in the js -->
 <%= button_to 'Edit Review', edit_game_review_path(@review.game, @review), method: :get %>
 <%= button_to 'Delete Review', game_review_path(@review.game, @review), method: :delete %>
 <%= button_to 'Show all Reviews', game_path(@review.game), method: :get %>

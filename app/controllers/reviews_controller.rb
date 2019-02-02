@@ -34,7 +34,6 @@ class ReviewsController < ApplicationController
         review = Review.new(review_params)
         if review.save
             @game = Game.find(params[:review][:game_id])
-            binding.pry
             respond_to do |format|
                 format.html {render :'games/show'}
                 format.json {render json: [review, @game]}

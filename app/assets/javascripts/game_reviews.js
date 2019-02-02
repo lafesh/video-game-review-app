@@ -9,6 +9,27 @@ function attachListeners() {
     $('#submit-game').click(displayGame) // displays game show page after game selection
 }
 
+class Review {
+    constructor(id, title, content, rating, recommend, user_id, game_id) {
+        debugger
+        this.id = id
+        this.title = title
+        this.content = content
+        this.rating = rating
+        this.recommend = recommend
+        this.user_id = user_id
+        this.game_id = game_id
+    }
+
+    render() {
+        let html = `
+        <h3>${this.title}</h3>
+        <h4>${this.rating} Star(s) - ${this.recommend == true ? "Would Recommend" : "Would Not Recommend"}</h4>
+        <p>${this.content}</p>
+        `
+    }
+}
+
 function getReviews() {
     event.preventDefault()
     let id = parseInt($(".js-reviews").attr("data-id"))
@@ -17,11 +38,10 @@ function getReviews() {
         data[0].map(r => {
             let user
             data[1].map(u => {if(u.id == r.user_id) {user = u.first_name}})
-            $("#reviews").append(
-                `<h3>${r.title}</h3>
-                 <h4>${r.rating} Star(s) - ${r.recommend == true ? "Would Recommend" : "Would Not Recommend"}</h4>
-                 <p>${r.content}</p>
-                 <h5>written by ${user}</h5><br>`)
+            let game = new Review(r.id, r.title, r.content, r.rating, r.recommend, r.user_id, r.game_id)
+            debugger
+            $("#reviews").append(game.render() +
+                `<h5>written by ${user}</h5><br>`)
         })
     })
 }

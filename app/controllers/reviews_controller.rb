@@ -32,11 +32,12 @@ class ReviewsController < ApplicationController
 
     def create
         review = Review.new(review_params)
-        binding.pry
         if review.save
+            @game = Game.find(params[:review][:game_id])
+            binding.pry
             respond_to do |format|
                 format.html {render :'games/show'}
-                format.json {render json: review}
+                format.json {render json: [review, @game]}
             end
         else
             flash[:message] = review.e

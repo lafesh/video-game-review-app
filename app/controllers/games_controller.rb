@@ -45,6 +45,10 @@ class GamesController < ApplicationController
         @users = User.all
         @game = Game.find(params[:id])
         render layout: "root" unless user_signed_in?
+        respond_to do |format|
+            format.html {render :show}
+            format.json {render json: [@users, @game]}
+        end
     end    
     
     def select_user

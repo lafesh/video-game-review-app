@@ -5,7 +5,10 @@
 <h2 id="r-title"><%= @review.title %></h2>
 <p id="r-content"><%= @review.content %></p>
 
-<!--pretty sure those buttons need to be included in the js -->
+<!--pretty sure those buttons need to be included in the js
 <%= button_to 'Edit Review', edit_game_review_path(@review.game, @review), method: :get %>
 <%= button_to 'Delete Review', game_review_path(@review.game, @review), method: :delete %>
-<%= button_to 'Show all Reviews', game_path(@review.game), method: :get %>
+<%= button_to 'Show all Reviews', game_path(@review.game), method: :get %> -->
+<button class="edit-review" data-id="<%= @review.id %>" type="button">Edit Review</button>
+<button class="delete-review" data-id="<% @review.id %>" type="button">Delete Review</button>
+<button class="show-reviews" data-id="<% @review.game_id %>" type="button">Show All Reviews</button>

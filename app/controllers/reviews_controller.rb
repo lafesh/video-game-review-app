@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
             @reviews = @game.reviews 
             respond_to do |format|
                 format.html {render :'games/show'}
-                format.json {render json: [@reviews, @users]}
+                format.json {render json: @reviews}
             end
         end
     end

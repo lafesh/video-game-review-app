@@ -32,11 +32,9 @@ function getReviews() {
     let id = parseInt($(".js-reviews").attr("data-id"))
     $.get(`/games/${id}/reviews.json`, function(data) {
         $("#h2-reviews").text("Reviews")
-        data[0].map(r => {
-            let user
-            data[1].map(u => {if(u.id == r.user_id) {user = u.first_name}})
-            let game = new Review(r.id, r.title, r.content, r.rating, r.recommend)
-            $("#reviews").append(game.render() + `<h5>written by ${user}</h5><br>`)
+        data.map(r => {
+            let review = new Review(r.id, r.title, r.content, r.rating, r.recommend)
+            $("#reviews").append(review.render() + `<h5>written by ${r.user.first_name}</h5><br>`)
         })
     })
 }
@@ -46,6 +44,7 @@ function nextReview() {
     var gameId = parseInt($(".js-next").attr("game-id"))
     var reviewId = parseInt($(".js-next").attr("review-id"))
     $.get(`/games/${gameId}/reviews/${reviewId}.json`, function(data) {
+        debugger
         var ind
         data[1].forEach(function(r, index) {if(r.game_id == data[0].game_id) {ind = index}})
         $.get(`/games/${data[1][ind+1].game_id}/reviews/${data[1][ind+1].id}.json`, function(data) {
@@ -55,7 +54,6 @@ function nextReview() {
             $("#review-display").html("")
             let review = new Review(data[0].id, data[0].title, data[0].content, data[0].rating, data[0].recommend)
             $("#review-display").append(review.render())
-            debugger
             $("#edit-button").attr("formAction", `/games/${data[0]["game_id"]}/reviews/${data[0]["id"]}/edit`)
             $("#delete-button").attr("formAction", `/games/${data[0]["game_id"]}/reviews/${data[0]["id"]}`)
             $(".show-reviews").attr("data-id", data[0]["game_id"])

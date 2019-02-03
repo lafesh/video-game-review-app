@@ -10,4 +10,4 @@
 
 <%= button_to 'Edit Review', edit_game_review_path(@review.game, @review), method: :get, id: "edit-button" %>
 <%= button_to 'Delete Review', game_review_path(@review.game, @review), method: :delete, id: "delete-button" %>
-<a href="/games/<%= @review.game_id %>"><button class="show-reviews" data-id="<%= @review.game_id %>" type="button">Show All Reviews</button></a>
+<a href="/games/<%= @review.game_id %>", class="show-reviews"><button data-id="<%= @review.game_id %>" type="button">Show All Reviews</button></a>

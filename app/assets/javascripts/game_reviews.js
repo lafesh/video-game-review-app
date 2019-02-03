@@ -41,24 +41,25 @@ function getReviews() {
 
 function nextReview() {
     event.preventDefault()
-    var gameId = parseInt($(".js-next").attr("game-id"))
-    var reviewId = parseInt($(".js-next").attr("review-id"))
+    let gameId = parseInt($(".js-next").attr("game-id"))
+    let reviewId = parseInt($(".js-next").attr("review-id"))
     $.get(`/games/${gameId}/reviews/${reviewId}.json`, function(data) {
-        debugger
-        var ind
-        data[1].forEach(function(r, index) {if(r.game_id == data[0].game_id) {ind = index}})
-        $.get(`/games/${data[1][ind+1].game_id}/reviews/${data[1][ind+1].id}.json`, function(data) {
-            var game
-            data[2].forEach(g => {if(g.id == data[0].game_id) {game = g.name}})
-            $("#r-game").text(game)
+        let ind
+        data.forEach(function(r, index) {if(r.game.id == gameId) {ind = index + 1}})
+        $.get(`/games/${data[ind].game.id}/reviews/${data[ind].id}.json`, function(data) {
+            let ind
+            data.forEach(function(r,index) {if(r.game.id == parseInt($(".js-next").attr("game-id"))) {ind = index + 1}})
+            let rev = data[ind]
+            debugger
+            $("#r-game").text(rev.game.name)
             $("#review-display").html("")
-            let review = new Review(data[0].id, data[0].title, data[0].content, data[0].rating, data[0].recommend)
+            let review = new Review(rev.id, rev.title, rev.content, rev.rating, rev.recommend)
             $("#review-display").append(review.render())
-            $("#edit-button").attr("formAction", `/games/${data[0]["game_id"]}/reviews/${data[0]["id"]}/edit`)
-            $("#delete-button").attr("formAction", `/games/${data[0]["game_id"]}/reviews/${data[0]["id"]}`)
-            $(".show-reviews").attr("data-id", data[0]["game_id"])
-            $(".js-next").attr("game-id", data[0]["game_id"])
-            $(".js-next").attr("review-id", data[0]["id"])   
+            $("#edit-button").attr("formAction", `/games/${rev.game.id}/reviews/${rev.id}/edit`)
+            $("#delete-button").attr("formAction", `/games/${rev.game.id}/reviews/${rev.id}`)
+            $(".show-reviews").attr("href", `/games/${rev.game.id}`)
+            $(".js-next").attr("game-id", rev.game.id)
+            $(".js-next").attr("review-id", rev.id)   
         })
     })
 }

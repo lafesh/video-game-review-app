@@ -3,8 +3,6 @@ class ReviewsController < ApplicationController
     def index
         @user = current_user
         if params[:game_id]
-            @users = User.all
-            @game = Game.find_by(id: params[:game_id])
             @reviews = @game.reviews 
             respond_to do |format|
                 format.html {render :'games/show'}
@@ -50,7 +48,7 @@ class ReviewsController < ApplicationController
         @review = Review.find(params[:id])
         respond_to do |format|
             format.html {render :show}
-            format.json {render json: [@review, @reviews, @games]}
+            format.json {render json: @reviews}
         end
     end
 

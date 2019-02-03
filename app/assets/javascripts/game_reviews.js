@@ -34,7 +34,6 @@ function getReviews() {
    
     $.get(`/games/${id}/reviews.json`, function(data) {
         $("#h2-reviews").text("Reviews")
-         debugger
         data.map(r => {
             let review = new Review(r.id, r.title, r.content, r.rating, r.recommend)
             $("#reviews").append(review.render() + `<h5>written by ${r.user.first_name}</h5><br>`)
@@ -93,15 +92,19 @@ function selectGame() {
     event.preventDefault()
     let game = parseInt($("#game_id").val())
     $.get(`/reviews.json`, function(data) {
-        debugger
         let rev
         data.forEach(r => {if(r.game_id == game) {rev = r}})
-        let d = new Date(rev.created_at)
-        let options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
-        let date = d.toLocaleDateString('en-EN', options)
-        $("#review-list").html("")
-        $("#review-list").append(`
-            <br><a href="/games/${rev.game_id}/reviews/${rev.id}">${rev.title}</a><br>
-            created on ${date}`)
+        if(rev == undefined) {
+            $("#error").append('<p>You do not have a review for that Game.</p>')
+        } else {
+            $("#error").html("")
+            let d = new Date(rev.created_at)
+            let options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
+            let date = d.toLocaleDateString('en-EN', options)
+            $("#review-list").html("")
+            $("#review-list").append(`
+                <br><a href="/games/${rev.game_id}/reviews/${rev.id}">${rev.title}</a><br>
+                created on ${date}`)
+        }    
     })
 }

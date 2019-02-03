@@ -3,8 +3,10 @@
 <%= form_tag games_select_game_path, id: "form" do %>
     <%= hidden_field_tag 'user', @user.id %>
     <%= select_tag 'game_id', options_from_collection_for_select(@games, "id", "name") %>
-    <%= submit_tag "Find Game", id: "select-game" %>
+    <%= submit_tag "Find Review", id: "select-game" %>
 <% end %>
+
+<div id="error"></div>
 
 <div id="review-list"> 
   <ul>

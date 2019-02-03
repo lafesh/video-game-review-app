@@ -31,8 +31,10 @@ class Review {
 function getReviews() {
     event.preventDefault()
     let id = parseInt($(".js-reviews").attr("data-id"))
+   
     $.get(`/games/${id}/reviews.json`, function(data) {
         $("#h2-reviews").text("Reviews")
+         debugger
         data.map(r => {
             let review = new Review(r.id, r.title, r.content, r.rating, r.recommend)
             $("#reviews").append(review.render() + `<h5>written by ${r.user.first_name}</h5><br>`)

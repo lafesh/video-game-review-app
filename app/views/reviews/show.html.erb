@@ -1,5 +1,6 @@
-<button class="js-next" review-id="<%= @review.id %>" game-id="<%= @review.game_id %>" type="button">Next Review</button>
-
+<% unless @review.id == @reviews[-1].id %>
+    <button class="js-next" review-id="<%= @review.id %>" game-id="<%= @review.game_id %>" type="button">Next Review</button>
+<% end %>
 
 <h1 id="r-game"><%= @review.game.name.capitalize %></h1>
 <div id="review-display">

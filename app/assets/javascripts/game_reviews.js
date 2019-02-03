@@ -96,6 +96,7 @@ function selectGame() {
         data.forEach(r => {if(r.game_id == game) {rev = r}})
         if(rev == undefined) {
             $("#error").append('<p>You do not have a review for that Game.</p>')
+            $("#review-list").html("")
         } else {
             $("#error").html("")
             let d = new Date(rev.created_at)

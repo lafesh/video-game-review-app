@@ -1,22 +1,19 @@
 <h2><%= @game.name %></h2>
 <p>Available for <%= @game.platform %> - <%= @game.rating %></p>
 <p><%= @game.description %></p>
+<% user = @game.reviews.all.find{|r| r.user == current_user} %>
 
 <% if @game.reviews.first.user == current_user %>
     <%= button_to 'Edit Game', edit_game_path(@game), method: :get %>
     <%= button_to 'Delete Game', game_path(@game), method: :delete, data: { confirm: 'Are you sure you want to delete this game and all its reviews?' } %>
-<% else %>
+<% elsif user == nil %>
     <button class="js-new-review" data-id="<%= @game.id %>" type="button">Write Review</button>
 <% end %>
 
 <div id="review-form"></div>
-
+<br> <button class="js-reviews" data-id="<%= @game.id %>" type="button">See Reviews</button>
 <br>
 _________________________________________________________
-<br>
-
-<br> <button class="js-reviews" data-id="<%= @game.id %>" type="button">See Reviews</button>
-
 <br><h2 id="h2-reviews"></h2>
 
 <div id="reviews"></div>

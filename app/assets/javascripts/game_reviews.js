@@ -91,16 +91,15 @@ function selectGame() {
     event.preventDefault()
     let game = parseInt($("#game_id").val())
     $.get(`/reviews.json`, function(data) {
+        debugger
         let rev
-        data.reviews.forEach(r => {if(r.game_id == game) {rev = r}})
+        data.forEach(r => {if(r.game_id == game) {rev = r}})
         let d = new Date(rev.created_at)
         let options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
         let date = d.toLocaleDateString('en-EN', options)
         $("#review-list").html("")
         $("#review-list").append(`
             <br><a href="/games/${rev.game_id}/reviews/${rev.id}">${rev.title}</a><br>
-            created on ${date} <br>
-
-        `)
+            created on ${date}`)
     })
 }

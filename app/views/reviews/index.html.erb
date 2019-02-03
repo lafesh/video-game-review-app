@@ -1,6 +1,6 @@
 <h3>Hi <%= @user.first_name.capitalize %>! Here are all the reviews you have written so far</h3>
 
-<%= form_tag reviews_select_game_path, id: "form" do %>
+<%= form_tag games_select_game_path, id: "form" do %>
     <%= hidden_field_tag 'user', @user.id %>
     <%= select_tag 'game_id', options_from_collection_for_select(@games, "id", "name") %>
     <%= submit_tag "Find Game", id: "select-game" %>

@@ -50,13 +50,6 @@ class GamesController < ApplicationController
             format.json {render json: [@users, @game]}
         end
     end    
-    
-    def select_user
-        @users = User.all
-        @game = Game.find(params[:game])
-        @user = User.find(params[:user_id])
-        render :'games/show'
-    end
 
     def edit
         if user_signed_in? 

@@ -1,6 +1,7 @@
 class ReviewsController < ApplicationController
     require 'pry'
     def index
+        @games = Game.all
         @user = current_user
         if params[:game_id]
             @reviews = Game.find(params[:game_id]).reviews 
@@ -8,6 +9,10 @@ class ReviewsController < ApplicationController
                 format.html {render :'games/show'}
                 format.json {render json: @reviews}
             end
+        end
+        respond_to do |format|
+            format.html {render :index}
+            format.json {render json: @user}
         end
     end
 

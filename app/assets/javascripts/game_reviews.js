@@ -6,6 +6,7 @@ function attachListeners() {
     $('.js-reviews').click(getReviews) // displays reviews on game show page
     $('.js-next').click(nextReview) // displays next review on review show page
     $('.js-new-review').click(newReview) // displays review form and creates review
+    $('#select-game').click(selectGame) // form sumission to 
 }
 
 class Review {
@@ -50,7 +51,6 @@ function nextReview() {
             let ind
             data.forEach(function(r,index) {if(r.game.id == parseInt($(".js-next").attr("game-id"))) {ind = index + 1}})
             let rev = data[ind]
-            debugger
             $("#r-game").text(rev.game.name)
             $("#review-display").html("")
             let review = new Review(rev.id, rev.title, rev.content, rev.rating, rev.recommend)
@@ -84,6 +84,23 @@ function newReview() {
                 <input type="submit" value="Create Review" id=js-submit">
             </form>`
         )
+    })
+}
 
+function selectGame() {
+    event.preventDefault()
+    let game = parseInt($("#game_id").val())
+    $.get(`/reviews.json`, function(data) {
+        let rev
+        data.reviews.forEach(r => {if(r.game_id == game) {rev = r}})
+        let d = new Date(rev.created_at)
+        let options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
+        let date = d.toLocaleDateString('en-EN', options)
+        $("#review-list").html("")
+        $("#review-list").append(`
+            <br><a href="/games/${rev.game_id}/reviews/${rev.id}">${rev.title}</a><br>
+            created on ${date} <br>
+
+        `)
     })
 }

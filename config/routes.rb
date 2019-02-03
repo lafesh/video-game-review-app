@@ -12,8 +12,6 @@ Rails.application.routes.draw do
   get '/games/game_overview', to: 'games#game_overview'
   post '/games/overview', to: 'games#overview'
 
-  post '/games/select_user', to: 'games#select_user'
-
   resources :reviews, only: [:index, :create, :update]
 
   resources :games, except: [:index] do

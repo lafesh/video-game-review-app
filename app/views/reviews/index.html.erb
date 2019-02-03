@@ -1,7 +1,13 @@
 <h3>Hi <%= @user.first_name.capitalize %>! Here are all the reviews you have written so far</h3>
 
-<ul>
-    
+<%= form_tag reviews_select_game_path, id: "form" do %>
+    <%= hidden_field_tag 'user', @user.id %>
+    <%= select_tag 'game_id', options_from_collection_for_select(@games, "id", "name") %>
+    <%= submit_tag "Find Game", id: "select-game" %>
+<% end %>
+
+<div id="review-list"> 
+  <ul>
     <% @user.reviews.each do |r| %>
       <% unless r.game == nil %>
         <li>
@@ -11,8 +17,8 @@
         </li> 
         <% else %>
       <% end %>
-    <% end %>
-    
-</ul>
+    <% end %>   
+  </ul>
+</div>
 
 <p><%= button_to 'Create new Review', games_select_game_path, method: :get %></p>

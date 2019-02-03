@@ -58,8 +58,7 @@ function nextReview() {
             $("#edit-button").attr("formAction", `/games/${rev.game.id}/reviews/${rev.id}/edit`)
             $("#delete-button").attr("formAction", `/games/${rev.game.id}/reviews/${rev.id}`)
             $(".show-reviews").attr("href", `/games/${rev.game.id}`)
-            $(".js-next").attr("game-id", rev.game.id)
-            $(".js-next").attr("review-id", rev.id)   
+            rev == data[data.length-1] ? $(".js-next").remove() : $(".js-next").attr({"game-id": rev.game.id, "review-id": rev.id}) 
         })
     })
 }

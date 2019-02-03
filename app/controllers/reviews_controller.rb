@@ -1,22 +1,21 @@
 class ReviewsController < ApplicationController
     require 'pry'
     def index
-        @revs = current_user.reviews
-        @games = Game.all
-        @user = current_user
-        if params[:game_id]
+        if user_signed_in?
+            @revs = current_user.reviews
+            @games = Game.all
+            @user = current_user
+            respond_to do |format|
+                format.html {render :index}
+                format.json {render json: @revs}
+            end
+        elsif params[:game_id]
             @reviews = Game.find(params[:game_id]).reviews 
             respond_to do |format|
                 format.html {render :'games/show'}
                 format.json {render json: @reviews}
             end
-        else
-            respond_to do |format|
-                format.html {render :index}
-                format.json {render json: @revs}
-            end
         end
-        
     end
 
     def new

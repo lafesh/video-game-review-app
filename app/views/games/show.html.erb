@@ -1,4 +1,3 @@
-<div id="game-show-page">
 <h2><%= @game.name %></h2>
 <p>Available for <%= @game.platform %> - <%= @game.rating %></p>
 <p><%= @game.description %></p>
@@ -25,4 +24,3 @@ _________________________________________________________
 <% if !user_signed_in? %>
     <h3>Cannot find what you are looking for? <%= link_to 'Sign Up', new_user_registration_path %> or <%= link_to 'Log In', new_user_session_path %> and create your own Games and Reviews!</h3> 
 <% end %>
-</div>

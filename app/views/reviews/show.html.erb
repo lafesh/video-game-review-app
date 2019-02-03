@@ -1,14 +1,13 @@
 <button class="js-next" review-id="<%= @review.id %>" game-id="<%= @review.game_id %>" type="button">Next Review</button>
 
-<h1 id="r-game"><%= @review.game.name.capitalize %></h1>
-<h3 id="r-rating"><%= @review.rating %> Star(s) - <%= rec(@review) %></h3>
-<h2 id="r-title"><%= @review.title %></h2>
-<p id="r-content"><%= @review.content %></p>
 
-<!--pretty sure those buttons need to be included in the js
-<%= button_to 'Edit Review', edit_game_review_path(@review.game, @review), method: :get %>
-<%= button_to 'Delete Review', game_review_path(@review.game, @review), method: :delete %>
-<%= button_to 'Show all Reviews', game_path(@review.game), method: :get %> -->
-<button class="edit-review" data-id="<%= @review.id %>" type="button">Edit Review</button>
-<button class="delete-review" data-id="<%= @review.id %>" type="button">Delete Review</button>
+<h1 id="r-game"><%= @review.game.name.capitalize %></h1>
+<div id="review-display">
+    <h3 id="r-title"><%= @review.title %></h3>
+    <h4 id="r-rating"><%= @review.rating %> Star(s) - <%= rec(@review) %></h4>
+    <p id="r-content"><%= @review.content %></p>
+</div>
+
+<%= button_to 'Edit Review', edit_game_review_path(@review.game, @review), method: :get, id: "edit-button" %>
+<%= button_to 'Delete Review', game_review_path(@review.game, @review), method: :delete, id: "delete-button" %>
 <a href="/games/<%= @review.game_id %>"><button class="show-reviews" data-id="<%= @review.game_id %>" type="button">Show All Reviews</button></a>

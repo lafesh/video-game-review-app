@@ -6,19 +6,15 @@ function attachListeners() {
     $('.js-reviews').click(getReviews) // displays reviews on game show page
     $('.js-next').click(nextReview) // displays next review on review show page
     $('.js-new-review').click(newReview) // displays review form and creates review
-    $('#submit-game').click(displayGame) // displays game show page after game selection
 }
 
 class Review {
-    constructor(id, title, content, rating, recommend, user_id, game_id) {
-        debugger
+    constructor(id, title, content, rating, recommend) {
         this.id = id
         this.title = title
         this.content = content
         this.rating = rating
         this.recommend = recommend
-        this.user_id = user_id
-        this.game_id = game_id
     }
 
     render() {
@@ -27,6 +23,7 @@ class Review {
         <h4>${this.rating} Star(s) - ${this.recommend == true ? "Would Recommend" : "Would Not Recommend"}</h4>
         <p>${this.content}</p>
         `
+        return html
     }
 }
 
@@ -38,10 +35,8 @@ function getReviews() {
         data[0].map(r => {
             let user
             data[1].map(u => {if(u.id == r.user_id) {user = u.first_name}})
-            let game = new Review(r.id, r.title, r.content, r.rating, r.recommend, r.user_id, r.game_id)
-            debugger
-            $("#reviews").append(game.render() +
-                `<h5>written by ${user}</h5><br>`)
+            let game = new Review(r.id, r.title, r.content, r.rating, r.recommend)
+            $("#reviews").append(game.render() + `<h5>written by ${user}</h5><br>`)
         })
     })
 }
@@ -55,25 +50,19 @@ function nextReview() {
         data[1].forEach(function(r, index) {if(r.game_id == data[0].game_id) {ind = index}})
         $.get(`/games/${data[1][ind+1].game_id}/reviews/${data[1][ind+1].id}.json`, function(data) {
             var game
-            let rec = data[0].recommend == true ? "Would Recommend" : "Would Not Recommend"
             data[2].forEach(g => {if(g.id == data[0].game_id) {game = g.name}})
             $("#r-game").text(game)
-            $("#r-rating").text(data[0]["rating"] + " Star(s) -" + rec )
-            $("#r-title").text(data[0]["title"])
-            $("#r-content").text(data[0]["content"])
+            $("#review-display").html("")
+            let review = new Review(data[0].id, data[0].title, data[0].content, data[0].rating, data[0].recommend)
+            $("#review-display").append(review.render())
             debugger
-            //figure out buttons
-            $(".edit-review").attr("data-id", data[0]["id"])
-            $(".delete-review").attr("data-id", data[0]["id"])
+            $("#edit-button").attr("formAction", `/games/${data[0]["game_id"]}/reviews/${data[0]["id"]}/edit`)
+            $("#delete-button").attr("formAction", `/games/${data[0]["game_id"]}/reviews/${data[0]["id"]}`)
             $(".show-reviews").attr("data-id", data[0]["game_id"])
             $(".js-next").attr("game-id", data[0]["game_id"])
             $(".js-next").attr("review-id", data[0]["id"])   
         })
     })
-}
-
-function createForm(action, method, model = null) {
-    //do i need this if i am only using it for one form
 }
 
 function newReview() {
@@ -99,14 +88,4 @@ function newReview() {
         )
 
     })
-}
-
-function displayGame() {
-    event.preventDefault()
-    let game_id = parseInt($("#games").val())
-    $.get(`/games/${game_id}.json`, function(data){
-        debugger
-        //render the whole showpage somehow
-    })
-    
 }

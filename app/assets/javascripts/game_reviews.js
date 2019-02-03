@@ -70,8 +70,8 @@ function newReview() {
         $(".js-new-review").remove()
         $("#review-form").append(
             `<form action="/reviews" method="post">
-                <input type="hidden" id="game_id" name="review[game_id]" value="${data["game_id"]}">
-                <input type="hidden" id="user_id" name="review[user_id]" value="${data["user_id"]}">
+                <input type="hidden" id="game_id" name="review[game_id]" value="${data.game.id}">
+                <input type="hidden" id="user_id" name="review[user_id]" value="${data.user.id}">
                 <input type="hidden" name="authenticity_token" value="${$("meta[name=csrf-token]")[1].content}">
                 <label for="title">Title</label>
                 <input type="text" name="review[title]">

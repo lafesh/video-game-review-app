@@ -3,7 +3,7 @@ class ReviewsController < ApplicationController
     def index
         @user = current_user
         if params[:game_id]
-            @reviews = @game.reviews 
+            @reviews = Game.find(params[:game_id]).reviews 
             respond_to do |format|
                 format.html {render :'games/show'}
                 format.json {render json: @reviews}
@@ -30,6 +30,7 @@ class ReviewsController < ApplicationController
 
     def create
         review = Review.new(review_params)
+        
         if review.save
             @game = Game.find(params[:review][:game_id])
             respond_to do |format|
@@ -38,14 +39,13 @@ class ReviewsController < ApplicationController
             end
         else
             flash[:message] = review.e
-            redirect_to new_game_review_path(review.game)
+            redirect_to new_game_review_path(review.game.id)
         end 
     end
 
     def show
-        @games = Game.all
-        @reviews = current_user.reviews
         @review = Review.find(params[:id])
+        @reviews = current_user.reviews
         respond_to do |format|
             format.html {render :show}
             format.json {render json: @reviews}

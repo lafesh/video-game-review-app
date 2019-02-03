@@ -1,4 +1,4 @@
 class GameSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :platform, :rating
+  attributes :id, :name
   has_many :reviews
 end

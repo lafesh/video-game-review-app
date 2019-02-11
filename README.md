@@ -1,6 +1,6 @@
-# Video Game Review App
+# GamePick
 
-Welcome to this application. It has been built so that a user can look up a game, find its description and reviews to decide if it is worth it to buy said game. If logged in the user is also able to add a new game or write their own review for an already existing game. She is then able to also delete or update her game or any of her reviews. 
+Welcome to this application. It has been built so that a user can look up a game, find its description and reviews to decide if it is worth it to buy said game. If logged in, the user is also able to add a new game or write their own review for an already existing game. She is then able to also delete or update her game or any of her reviews. 
 
 # Framework Used
     Rails

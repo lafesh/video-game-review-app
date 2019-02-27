@@ -45,7 +45,7 @@ class ReviewsController < ApplicationController
 
     def create
         review = Review.new(review_params)
-        
+        #binding.pry
         if review.save
             @game = Game.find(params[:review][:game_id])
             respond_to do |format|

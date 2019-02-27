@@ -7,6 +7,7 @@ function attachListeners() {
     $('.js-next').click(nextReview) // displays next review on review show page
     $('.js-new-review').click(newReview) // displays review form and creates review
     $('#select-game').click(selectGame) // form sumission to 
+    
 }
 
 class Review {
@@ -75,17 +76,31 @@ function newReview() {
                 <input type="hidden" id="user_id" name="review[user_id]" value="${data.user.id}">
                 <input type="hidden" name="authenticity_token" value="${$("meta[name=csrf-token]")[1].content}">
                 <label for="title">Title</label>
-                <input type="text" name="review[title]">
+                <input type="text" id="title" name="review[title]">
                 <label for="content">Content</label>
-                <input type="text" name="review[content]">
+                <input type="text" id="content" name="review[content]">
                 <label for="rating">Rating</label>
-                <input type="number" name="review[rating]" min="1" max="5" step="1" value="1">
+                <input type="number" id="rating" name="review[rating]" min="1" max="5" step="1" value="1">
                 <label for="recommend">Recommend</label>
-                <input type="checkbox" name="review[recommend]">
-                <input type="submit" value="Create Review" id=js-submit">
+                <input type="checkbox" id="recommend" name="review[recommend]">
+                <input type="submit" value="Create Review" id="js-submit">
             </form>`
         )
+        $('#js-submit').click(createReview)
     })
+}
+
+function createReview(event) {
+    event.preventDefault()
+    var form = {
+        user_id: $("#user_id").attr("value"),
+        game_id: $("#game_id").attr("value"),
+        title: $("#title").val(),
+        content: $("#content").val(),
+        rating: $("#rating").attr("value"),
+        recommend: $("#recommend").val()
+    }
+    $.post(`/reviews`, {review: form}, function(result) {}, "json")
 }
 
 function selectGame() {
